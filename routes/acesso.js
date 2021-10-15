@@ -93,7 +93,7 @@ router.post('/cadastrar/admin/', (req, res, next) => {
 router.post('/login/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
-        const query = 'SELECT * FROM participantes WHERE EMAIL = ?';
+        const query = 'SELECT email, senha FROM participantes WHERE EMAIL = 2';
         conn.query(query, [req.body.email], (error, results, fields) => {
             conn.release();
             if (error) { return res.status(500).send({ error: error }) }
