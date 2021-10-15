@@ -7,7 +7,7 @@ const login = require('../middleware/login');
 
 // TESTAR RETORNO
 const tipo = 'acesso'
-
+/*
 // CONSULTA TODOS
 router.get('/', login.required, (req, res, next) => {    
     mysql.getConnection((error, conn) => {
@@ -25,7 +25,7 @@ router.get('/', login.required, (req, res, next) => {
         )
     })
 });
-
+*/
 // INSERIR USUARIO
 router.post('/cadastrar/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
