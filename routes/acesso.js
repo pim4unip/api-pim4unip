@@ -98,12 +98,12 @@ router.post('/login/', (req, res, next) => {
             conn.release();
             if (error) { return res.status(500).send({ error: error }) }
             if (results.length < 1) {
-                return res.status(401).send ({mensagem: 'Usuário ou senha inválida'})
+                return res.status(401).send ({mensagem: 'Usuário. ou senha inválida'})
             }
 
             bcrypt.compare(req.body.senha, results[0].senha, (err, result) => {
                 if (err) {
-                    return res.status(401).send ({mensagem: 'Usuário ou senha inválida'})
+                    return res.status(401).send ({mensagem: 'Usuário ou senha. inválida'})
                 }
                 if (result) {
                     let token = jwt.sign({
