@@ -30,7 +30,7 @@ router.get('/', login.required, (req, res, next) => {
 router.post('/cadastrar/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
-        conn.query ('SELECT * FROM participantes WHERE email = ?', [req.body.email], (error,results)=>{
+        conn.query ('SELECT * FROM participantes WHERE email = ?', [req.body.usuario], (error,results)=>{
             if (error) { return res.status(500).send({ error: error }) }
             if (results.length > 0){
                 res.status(409).send({mensagem: "Usuário já cadastrado"})
@@ -39,14 +39,14 @@ router.post('/cadastrar/', (req, res, next) => {
                     if (errBcrypt){ return res.status(500).send ({error: errBcrypt})}
                     conn.query(
                         'INSERT INTO participantes (email, senha) VALUES (?,?)',
-                        [req.body.email, hash],
+                        [req.body.usuario, hash],
                         (error, resultado, field) => {
                             conn.release();
                             if (error) { return res.status(500).send({ error: error }) }
                             res.status(201).send({
                                 mensagem: 'Cadastrado com sucesso',
                                 id: resultado.insertId,
-                                email: req.body.email
+                                email: req.body.usuario
                             })
                         }
                     )
@@ -98,12 +98,12 @@ router.post('/login/', (req, res, next) => {
             conn.release();
             if (error) { return res.status(500).send({ error: error }) }
             if (results.length < 1) {
-                return res.status(401).send ({mensagem: 'Usuário. ou senha inválida'})
+                return res.status(401).send ({mensagem: 'Usuário ou senha inválida'})
             }
 
             bcrypt.compare(req.body.senha, results[0].senha, (err, result) => {
                 if (err) {
-                    return res.status(401).send ({mensagem: 'usuario body: ' + req.body.usuario + 'senha body:' + req.body.senha + 'senha banco: ' + results[0].senha})
+                    return res.status(401).send ({mensagem: 'Usuário ou senha inválida'})
                 }
                 if (result) {
                     let token = jwt.sign({
