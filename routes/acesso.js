@@ -103,7 +103,7 @@ router.post('/login/', (req, res, next) => {
 
             bcrypt.compare(req.body.senha, results[0].senha, (err, result) => {
                 if (err) {
-                    return res.status(401).send ({mensagem: 'Usuário ou senha. inválida'})
+                    return res.status(401).send ({mensagem: req.body.senha + ' gonzagaviado ' + results[0].senha})
                 }
                 if (result) {
                     let token = jwt.sign({
