@@ -25,12 +25,12 @@ router.get('/', login.required, (req, res, next) => {
         )
     })
 });
-/*
+
 // INSERIR USUARIO
 router.post('/cadastrar/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
-        conn.query ('SELECT * FROM tb_acesso WHERE usuario = ?', [req.body.usuario], (error,results)=>{
+        conn.query ('SELECT * FROM participantes WHERE email = ?', [req.body.email], (error,results)=>{
             if (error) { return res.status(500).send({ error: error }) }
             if (results.length > 0){
                 res.status(409).send({mensagem: "Usuário já cadastrado"})
@@ -38,15 +38,15 @@ router.post('/cadastrar/', (req, res, next) => {
                 bcrypt.hash(req.body.senha, 10, (errBcrypt, hash) => {
                     if (errBcrypt){ return res.status(500).send ({error: errBcrypt})}
                     conn.query(
-                        'INSERT INTO tb_acesso (usuario, senha, permissao) VALUES (?,?,0)',
-                        [req.body.usuario, hash],
+                        'INSERT INTO participantes (email, senha) VALUES (?,?)',
+                        [req.body.email, hash],
                         (error, resultado, field) => {
                             conn.release();
                             if (error) { return res.status(500).send({ error: error }) }
                             res.status(201).send({
                                 mensagem: 'Cadastrado com sucesso',
-                                id_acesso: resultado.insertId,
-                                usuario: req.body.usuario
+                                id: resultado.insertId,
+                                email: req.body.email
                             })
                         }
                     )
@@ -56,7 +56,7 @@ router.post('/cadastrar/', (req, res, next) => {
     });
 });
 
-
+/*
 // INSERIR ADMIN
 router.post('/cadastrar/admin/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
