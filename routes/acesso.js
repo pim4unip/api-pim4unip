@@ -93,9 +93,8 @@ router.post('/cadastrar/admin/', (req, res, next) => {
 router.post('/login/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
-        const query = 'SELECT email, senha FROM participantes WHERE EMAIL = 2';
-        //conn.query(query, [req.body.email], (error, results, fields) => {
-            conn.query(query,  (error, results, fields) => {
+        const query = 'SELECT email, senha FROM participantes WHERE EMAIL = ?';
+        conn.query(query, [req.body.usuario], (error, results, fields) => {
             conn.release();
             if (error) { return res.status(500).send({ error: error }) }
             if (results.length < 1) {
@@ -104,12 +103,12 @@ router.post('/login/', (req, res, next) => {
 
             bcrypt.compare(req.body.senha, results[0].senha, (err, result) => {
                 if (err) {
-                    return res.status(401).send ({mensagem: req.body.senha + ' gonzagaviado ' + results[0].senha})
+                    return res.status(401).send ({mensagem: 'usuario body: ' + req.body.usuario + 'senha body:' + req.body.senha + 'senha banco: ' + results[0].senha})
                 }
                 if (result) {
                     let token = jwt.sign({
                         id: results[0].id,
-                        email: results[0].email
+                        email: results[0].usuario
                     }, process.env.JWT_KEY,
                     {
                         expiresIn: '15d'
@@ -117,12 +116,12 @@ router.post('/login/', (req, res, next) => {
 
                     conn.query(
                        // 'UPDATE tb_acesso SET token = ? WHERE usuario = ?',
-                        [token, req.body.email])
+                        [token, req.body.usuario])
 
                     return res.status(200).send ({
                         mensagem: 'Autenticado com sucesso',
                         id: results[0].id,
-                        usuario: req.body.email,
+                        usuario: req.body.usuario,
                         token: token
                     });
                 }
