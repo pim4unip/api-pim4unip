@@ -1,0 +1,11 @@
+CREATE TABLE heroku_ecd4ebf1cf71e9a.`tb_acesso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(100) NOT NULL,
+  `senha` varchar(100) NOT NULL,
+  `permissao` int(11) NOT NULL,
+  `token` varchar(500) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `usuario` (`usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+

@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "us-cdbr-east-04.cleardb.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "pim-app",
+            "database": "heroku_ecd4ebf1cf71e9a",
+            "username": "b10712d85f33fe",
+            "password": "cd5afbb9"
+        }
+    ]
+}
