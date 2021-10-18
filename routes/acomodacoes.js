@@ -13,7 +13,7 @@ router.get('/', login.required, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
-            'SELECT * FROM acomodacoes',
+            'SELECT * FROM acomodacoes WHERE ativo = 1',
             (error, resultado, field) => {
                 conn.release();
                 if (error) { return res.status(500).send({ error: error }) }
