@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const rotaAcessos = require('./routes/acesso');
+const rotaAcomodacoes = require('./routes/acomodacoes');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));  // apenas dados simples
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/acesso', rotaAcessos);
+app.use('/acomodacoes', rotaAcomodacoes);
 
 app.use((req, res, next) => {
     const erro = new Error('Erro não encontrado!');
