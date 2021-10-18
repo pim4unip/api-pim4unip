@@ -25,6 +25,25 @@ router.get('/', login.required, (req, res, next) => {
         )
     })
 });
+
+// RETORNO UNICO
+router.get('/:id', login.required, (req, res, next) => {    
+    mysql.getConnection((error, conn) => {
+        if (error) { return res.status(500).send({ error: error }) }
+        conn.query(
+            'SELECT * FROM acomodacoes WHERE id = ?',
+            [req.params.id],
+            (error, resultado, field) => {
+                conn.release();
+                if (error) { return res.status(500).send({ error: error }) }
+                return res.status(201).send({
+                    mensagem: 'OK',
+                    response: resultado //resultado
+                })
+            }
+        )
+    })
+});
 /*
 // INSERIR USUARIO
 router.post('/cadastrar/', (req, res, next) => {
@@ -88,7 +107,7 @@ router.post('/cadastrar/admin/', (req, res, next) => {
 });
 
 
-
+/*
 // RETORNO UNICO
 router.post('/login/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
