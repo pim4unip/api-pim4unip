@@ -18,6 +18,7 @@ router.get('/', login.required, (req, res, next) => {
                 conn.release();
                 if (error) { return res.status(500).send({ error: error }) }
                 return res.status(201).send({
+                    imagem: resultado.id;
                     mensagem: 'OK',
                     response: 'Token válido' //resultado
                 })
