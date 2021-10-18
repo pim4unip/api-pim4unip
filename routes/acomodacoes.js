@@ -14,7 +14,7 @@ router.get('/', login.required, (req, res, next) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
             'SELECT * FROM acomodacoes WHERE ativo = 1',
-            (error, resultado, field) => {
+            (error, resultado) => {
                 conn.release();
                 if (error) { return res.status(500).send({ error: error }) }
                 return res.status(201).send({
