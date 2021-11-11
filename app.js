@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const rotaAcessos = require('./routes/acesso');
 const rotaAcomodacoes = require('./routes/acomodacoes');
 const rotaEventos = require('./routes/eventos');
-const rotaProdServ = require('./routes/prodserv');
+const rotaProdutos = require('./routes/produtos');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));  // apenas dados simples
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.use('/acesso', rotaAcessos);
 app.use('/acomodacoes', rotaAcomodacoes);
 app.use('/eventos', rotaEventos);
-app.use('/prodserv', rotaProdServ);
+app.use('/produtos', rotaProdutos);
 
 app.use((req, res, next) => {
     const erro = new Error('Erro não encontrado!');
