@@ -13,25 +13,7 @@ router.get('/', login.optional, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
-            'SELECT * FROM produtos_servicos WHERE ativo = 1 AND PRODUTOS_SERVICOS = "P"',
-            (error, resultado, field) => {
-                conn.release();
-                if (error) { return res.status(500).send({ error: error }) }
-                return res.status(201).send({
-                    response: resultado //resultado
-                })
-            }
-        )
-    })
-});
-
-// RETORNO UNICO
-router.get('/:id', login.optional, (req, res, next) => {    
-    mysql.getConnection((error, conn) => {
-        if (error) { return res.status(500).send({ error: error }) }
-        conn.query(
-            'SELECT * FROM produtos_servicos WHERE id = ?',
-            [req.params.id],
+            'SELECT * FROM produtos_servicos WHERE ativo = 1',
             (error, resultado, field) => {
                 conn.release();
                 if (error) { return res.status(500).send({ error: error }) }
@@ -45,11 +27,12 @@ router.get('/:id', login.optional, (req, res, next) => {
 
 // CONSULTA PRODUTOS 
 
-router.get('/P', login.optional, (req, res, next) => {    
+router.get('/:tipo', login.optional, (req, res, next) => {    
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
-            'SELECT * FROM produtos_servicos WHERE ativo = 1 and PRODUTOS_SERVICOS = "P";',
+            'SELECT * FROM produtos_servicos  WHERE ativo = 1 and PRODUTOS_SERVICOS = "?"',
+            [req.params.tipo],
             (error, resultado, field) => {
                 conn.release();
                 if (error) { return res.status(500).send({ error: error }) }
