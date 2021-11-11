@@ -9,7 +9,7 @@ const login = require('../middleware/login');
 const tipo = 'eventos'
 
 // CONSULTA TODOS
-router.get('/', login.optional, (req, res, next) => {    
+router.get('/', login.required, (req, res, next) => {    
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
@@ -26,7 +26,7 @@ router.get('/', login.optional, (req, res, next) => {
 });
 
 // RETORNO UNICO
-router.get('/:id', login.optional, (req, res, next) => {    
+router.get('/:id', login.required, (req, res, next) => {    
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
