@@ -45,7 +45,7 @@ router.get('/:id', login.optional, (req, res, next) => {
 
 // CONSULTA PRODUTOS 
 
-router.get('/P/', login.optional, (req, res, next) => {    
+router.get('/P', login.optional, (req, res, next) => {    
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
