@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const rotaAcessos = require('./routes/acesso');
 const rotaAcomodacoes = require('./routes/acomodacoes');
 const rotaEventos = require('./routes/eventos');
-const rotaEventos = require('./routes/prodserv');
+const rotaProdServ = require('./routes/prodserv');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));  // apenas dados simples
