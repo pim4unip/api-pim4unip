@@ -45,12 +45,11 @@ router.get('/:id', login.optional, (req, res, next) => {
 
 // CONSULTA PRODUTOS 
 
-router.get('/:tipo/', login.optional, (req, res, next) => {    
+router.get('/P/', login.optional, (req, res, next) => {    
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
-            'SELECT * FROM produtos_servicos WHERE ativo = 1 and PRODUTOS_SERVICOS = ?;',
-            [req.params.tipo],
+            'SELECT * FROM produtos_servicos WHERE ativo = 1 and PRODUTOS_SERVICOS = "P";',
             (error, resultado, field) => {
                 conn.release();
                 if (error) { return res.status(500).send({ error: error }) }
