@@ -38,7 +38,7 @@ router.post('/cadastrar/', (req, res, next) => {
                 bcrypt.hash(req.body.senha, 10, (errBcrypt, hash) => {
                     if (errBcrypt){ return res.status(500).send ({error: errBcrypt})}
                     conn.query(
-                        'INSERT INTO participantes (email, senha, NOME_RAZAO, DATA_ANIVER_FUNDAC) VALUES (?,?,?,?)',
+                        'INSERT INTO participantes (email, senha, NOME_RAZAO, DATA_ANIVER_FUNDAC, ativo, id_finalidades) VALUES (?,?,?,?,1,25)',
                         [req.body.usuario, hash, req.body.nome, req.body.data],
                         (error, resultado, field) => {
                             conn.release();
