@@ -66,8 +66,7 @@ router.post('/reserva', login.optional, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
-            'call buscarCalendario (?, 5, 95, "24/11/2021", "26/11/2021", 2, 100, 200, "26/11/2021", 5,"26/11/2021", 5)',
-            [req.body.id_situacao],
+            'call buscarCalendario (5, 5, 95, "24/11/2021", "26/11/2021", 2, 100, 200, "26/11/2021", 5,"26/11/2021", 5)'
             (error, resultado, field) => {
                 conn.release();
                 if (error) { return res.status(500).send({ error: error }) }
