@@ -9,7 +9,7 @@ const login = require('../middleware/login');
 const tipo = 'acomodacoes'
 
 // CONSULTA TODOS
-router.get('/', login.optional, (req, res, next) => {    
+router.get('/', login.required, (req, res, next) => {    
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
