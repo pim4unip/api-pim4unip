@@ -66,21 +66,18 @@ router.get('/listar-disponiveis', login.optional, (req, res, next) => {
 router.post('/reserva/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
-                    conn.query(
-                        'call buscarCalendario (5, ?, ?, ?, ?, ?, 1, 1, "01/01/1900", 5,"01/01/1900", 5)',
-                        [req.body.id_acomodacao, req.body.id_hospede, req.body.data_entra, req.body.data_sai, req.body.num_diaria],
-                        (error, resultado, field) => {
-                            conn.release();
-                            if (error) { return res.status(500).send({ error: error }) }
-                            res.status(201).send({
-                                mensagem: 'Cadastrado com sucesso',
-                                id: resultado.insertId,
-                                id_hospede: req.body.id_hospede
-                                //email: req.body.usuario
-                            })
-                        }
-                    )
-
+        conn.query(
+            'call buscarCalendario (5, ?, ?, ?, ?, ?, 999, 999, "01/01/1900", 5,"01/01/1900", 5)',
+            [req.body.id_acomodacao, req.body.id_hospede, req.body.data_entra, req.body.data_sai, req.body.num_diaria],
+            (error, resultado, field) => {
+                conn.release();
+                if (error) { return res.status(500).send({ error: error }) }
+                res.status(201).send({
+                    mensagem: 'Reservado com sucesso',
+                    id_hospede: req.body.id_hospede
+                })
+            }
+        )
     });
 });
 
