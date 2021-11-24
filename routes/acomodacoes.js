@@ -67,14 +67,15 @@ router.post('/reserva/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
                     conn.query(
-                        'call buscarCalendario (5, 5, 95, "24/11/2021", "26/11/2021", 2, 100, 200, "26/11/2021", 5,"26/11/2021", 5)',
-                        //[req.body.usuario, hash, req.body.nome, req.body.data],
+                        'call buscarCalendario (5, ?, ?, ?, ?, ?, 1, 1, "01/01/1900", 5,"01/01/1900", 5)',
+                        [req.body.id_acomodacao, req.body.id_hospede, req.body.data_entra, req.body.data_sai, req.body.num_diaria],
                         (error, resultado, field) => {
                             conn.release();
                             if (error) { return res.status(500).send({ error: error }) }
                             res.status(201).send({
                                 mensagem: 'Cadastrado com sucesso'//,
-                                //id: resultado.insertId,
+                                id: resultado.insertId,
+                                id_hospede: req.body.id_hospede
                                 //email: req.body.usuario
                             })
                         }
